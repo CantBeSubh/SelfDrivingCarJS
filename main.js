@@ -1,5 +1,3 @@
-import './style.css'
-
 let size={
   h:window.innerHeight,
   w:window.innerWidth
