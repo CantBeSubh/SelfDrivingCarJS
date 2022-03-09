@@ -1,6 +1,24 @@
 import './style.css'
 
-document.querySelector('#app').innerHTML = `
-  <h1>Hello Vite!</h1>
-  <a href="https://vitejs.dev/guide/features.html" target="_blank">Documentation</a>
-`
+let size={
+  h:window.innerHeight,
+  w:window.innerWidth
+}
+
+const canvas=document.getElementById('canvas')
+canvas.width=200
+
+const ctx=canvas.getContext('2d')
+const car=new CAR(100,100,30,50)
+car.draw(ctx)
+
+
+const animate=()=>{
+  car.update()
+  size.h=window.innerHeight
+  canvas.height=size.h
+  car.draw(ctx)
+  window.requestAnimationFrame(animate)
+}
+
+animate()
