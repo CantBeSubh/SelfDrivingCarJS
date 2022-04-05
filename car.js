@@ -11,6 +11,7 @@ class CAR{
         this.friction=.05
         this.angle=0
 
+        this.sensor=new Sensor(this)
         this.controls=new CONTROL()
     }
 
@@ -49,6 +50,8 @@ class CAR{
         }
         this.x-=Math.sin(this.angle)*this.speed
         this.y-=Math.cos(this.angle)*this.speed
+
+        this.sensor.update()
     }
     
     draw(ctx){
@@ -65,5 +68,7 @@ class CAR{
         )
         ctx.fill()
         ctx.restore()
+
+        this.sensor.draw(ctx)
     }
 }
