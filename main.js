@@ -13,7 +13,7 @@ car.draw(ctx)
 
 
 const animate=()=>{
-  car.update()
+  car.update(road.border)
   size.h=window.innerHeight
   canvas.height=size.h
   ctx.save()

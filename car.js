@@ -15,7 +15,7 @@ class CAR{
         this.controls=new CONTROL()
     }
 
-    update(){
+    update(roadBorders){
         if(this.controls.b){
             this.speed-=this.acc
         }
@@ -51,7 +51,7 @@ class CAR{
         this.x-=Math.sin(this.angle)*this.speed
         this.y-=Math.cos(this.angle)*this.speed
 
-        this.sensor.update()
+        this.sensor.update(roadBorders)
     }
     
     draw(ctx){
