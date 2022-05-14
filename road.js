@@ -1,47 +1,56 @@
-class ROAD{
-    constructor(x,width,lane=3){
-        this.x=x
-        this.w=width
-        this.lane=lane
-        this.l=x-width/2
-        this.r=x+width/2
-        const infinity=1000000
-        this.t=infinity
-        this.b=-infinity
+class Road{
+    constructor(x,width,laneCount=3){
+        this.x=x;
+        this.width=width;
+        this.laneCount=laneCount;
 
-        const topLeft={x:this.l,y:this.t}
-        const topRight={x:this.r,y:this.t}
-        const bottomLeft={x:this.l,y:this.b}
-        const bottomRight={x:this.r,y:this.b}
+        this.left=x-width/2;
+        this.right=x+width/2;
 
-        this.border=[
+        const infinity=1000000;
+        this.top=-infinity;
+        this.bottom=infinity;
+
+        const topLeft={x:this.left,y:this.top};
+        const topRight={x:this.right,y:this.top};
+        const bottomLeft={x:this.left,y:this.bottom};
+        const bottomRight={x:this.right,y:this.bottom};
+        this.borders=[
             [topLeft,bottomLeft],
             [topRight,bottomRight]
-        ]
+        ];
     }
+
     getLaneCenter(laneIndex){
-        const laneW=this.w/this.lane
-        return this.l+laneW/2+Math.min(laneIndex,this.lane-1)*laneW
+        const laneWidth=this.width/this.laneCount;
+        return this.left+laneWidth/2+
+            Math.min(laneIndex,this.laneCount-1)*laneWidth;
     }
+
     draw(ctx){
-        ctx.lineWidth=5
-        ctx.strokeStyle='white'
+        ctx.lineWidth=5;
+        ctx.strokeStyle="white";
 
-        for(let i=1;i<=this.lane-1;i++){
-            const x=lerp(this.l,this.r,i/this.lane)
-                ctx.setLineDash([20,20])
-                ctx.beginPath()
-                ctx.moveTo(x,this.t)
-                ctx.lineTo(x,this.b)
-                ctx.stroke()
+        for(let i=1;i<=this.laneCount-1;i++){
+            const x=lerp(
+                this.left,
+                this.right,
+                i/this.laneCount
+            );
+            
+            ctx.setLineDash([20,20]);
+            ctx.beginPath();
+            ctx.moveTo(x,this.top);
+            ctx.lineTo(x,this.bottom);
+            ctx.stroke();
         }
-        ctx.setLineDash([])
-        this.border.forEach(elm=>{
-            ctx.beginPath()
-            ctx.moveTo(elm[0].x,elm[0].y)
-            ctx.lineTo(elm[1].x,elm[1].y)
-            ctx.stroke()
-        })
 
+        ctx.setLineDash([]);
+        this.borders.forEach(border=>{
+            ctx.beginPath();
+            ctx.moveTo(border[0].x,border[0].y);
+            ctx.lineTo(border[1].x,border[1].y);
+            ctx.stroke();
+        });
     }
 }
